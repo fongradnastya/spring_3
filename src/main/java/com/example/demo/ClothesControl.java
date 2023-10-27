@@ -22,8 +22,8 @@ public class ClothesControl {
      * @param clothes предмет одежды для добавления
      */
     public void addClothes(Clothes clothes) {
-        String sql = "INSERT INTO clothes (item_name, color, brand, item_size, price, quantity) VALUES (?, ?, ?, ?, ?, ?)";
-        System.out.println(sql);
+        String sql = "INSERT INTO clothes (item_name, color, brand, item_size, price, quantity) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, clothes.getName(), clothes.getColor(), clothes.getBrand(), clothes.getSize(),
         clothes.getPrice(), clothes.getQuantity());
     }

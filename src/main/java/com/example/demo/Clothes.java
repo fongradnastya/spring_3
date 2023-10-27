@@ -179,14 +179,9 @@ public class Clothes {
      */
     @Override
     public String toString() {
-        return "Clothes{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                ", brand='" + brand + '\'' +
-                ", size=" + size +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
+        return String.format(
+                "ID: %d, Название: %s, Цвет: %s, Бренд: %s, Размер: %d, Цена: %.2f ₽, Количество: %d",
+                id, name, color, brand, size, price, quantity
+        );
     }
 }
