@@ -44,14 +44,14 @@ sudo apt-get install postgresql postgresql-contrib
 ```
 sudo -i -u postgres
 psql
-CREATE DATABASE furniture WITH ENCODING 'UTF8';
+CREATE DATABASE postgres WITH ENCODING 'UTF8';
 ```
 
 Также, необходимо создать пользователя postgres с правами, позволяющими использовать базу данных:
 
 ```
-CREATE USER postgres WITH ENCRYPTED PASSWORD 'postgres';
-GRANT ALL PRIVILEGES ON DATABASE furniture TO postgres; 
+CREATE USER postgres WITH ENCRYPTED PASSWORD 'vbpouz75';
+GRANT ALL PRIVILEGES ON DATABASE postgres TO postgres; 
 ```
 
 ### 3. Инициализация базы данных:
@@ -59,15 +59,10 @@ GRANT ALL PRIVILEGES ON DATABASE furniture TO postgres;
 Запустите скрипт ```init.sql``` с помощью следующей команды:
 
 ```
-psql -U postgres -d furniture -f init.sql
+psql -U postgres -d postgres -f init.sql
 ```
 
-В этом скрипте:
-
-- Создается схема furniture_schema, если она не существует;
-- Устанавливается путь поиска по умолчанию для этой схемы.
-- Создается таблица furniture с полями id, name, type, price, и quantity, если она не существует.
-- Вставляются некоторые образцовые данные в таблицу furniture.
+В этом скрипте создается и заполняется тестовыми данными таблиа clothes
 
 ## Инструкция по сборке и запуску Java-проекта из командной строки
 
@@ -89,5 +84,5 @@ mvn -version
 
 ```
 mvn clean package
-java -jar target/JavaCore-4.0.jar
+java -jar target/demo3-0.0.1-SNAPSHOT.jar
 ```

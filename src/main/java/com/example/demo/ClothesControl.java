@@ -15,7 +15,8 @@ public class ClothesControl {
     private JdbcTemplate jdbcTemplate;
 
     public void addClothes(Clothes clothes) {
-        String sql = "INSERT INTO clothes (name, color, brand, size, price, quantity) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO clothes (item_name, color, brand, item_size, price, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+        System.out.println(sql);
         jdbcTemplate.update(sql, clothes.getName(), clothes.getColor(), clothes.getBrand(), clothes.getSize(),
         clothes.getPrice(), clothes.getQuantity());
     }
@@ -26,7 +27,7 @@ public class ClothesControl {
     }
 
     public void updateClothes(Integer id, Clothes updatedClothes) {
-        String sql = "UPDATE clothes SET name=?, color=?, brand=?, size=?, price=?, quantity=? WHERE id=?";
+        String sql = "UPDATE clothes SET item_name=?, color=?, brand=?, item_size=?, price=?, quantity=? WHERE id=?";
         jdbcTemplate.update(sql, updatedClothes.getName(),updatedClothes.getColor(), updatedClothes.getBrand(),
                 updatedClothes.getSize(), updatedClothes.getPrice(), updatedClothes.getQuantity(), id);
     }

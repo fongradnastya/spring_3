@@ -91,17 +91,11 @@ public class Application {
         System.out.println("1 - Название");
         System.out.println("2 - Цвет одежды");
         System.out.println("3 - Бренд одежды");
-        System.out.println("4 - Размер одежды");
-        System.out.println("5 - Цена");
-        System.out.println("6 - Число товара в наличии");
         String field;
         switch (scanner.nextLine()) {
             case "1" -> field = "item_name";
             case "2" -> field = "color";
             case "3" -> field = "brand";
-            case "4" -> field = "item_size";
-            case "5" -> field = "price";
-            case "6" -> field = "quantity";
             default -> {
                 System.out.println("Неверная комманда, попробуйте снова");
                 return;
@@ -109,7 +103,6 @@ public class Application {
         }
         System.out.println("Введите значение для поиска:");
         String value = scanner.nextLine();
-
         List<Clothes> clothesList = clothesService.searchClothes(field, value);
         if (clothesList.isEmpty()) {
             System.out.println("Одежда не найдена");
