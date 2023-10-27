@@ -1,13 +1,24 @@
 package com.example.demo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-@SpringBootApplication
+
 public class Main {
 
+    /**
+     * Точка входа в приложение.
+     *
+     * @param args аргументы командной строки
+     */
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
-    }
+        // Создание контекста приложения на основе аннотаций
+        ApplicationContext context = new AnnotationConfigApplicationContext("com.example.demo");
 
+        // Получение бина Application из контекста
+        Application consoleApplication = context.getBean(Application.class);
+
+        // Запуск приложения
+        consoleApplication.run();
+    }
 }

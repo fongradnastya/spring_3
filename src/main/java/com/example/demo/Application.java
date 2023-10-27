@@ -14,53 +14,52 @@ public class Application {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("1. Добавить мебель");
-            System.out.println("2. Вывести всю мебель");
-            System.out.println("3. Изменить мебель");
-            System.out.println("4. Поиск мебели");
-            System.out.println("5. Удалить мебель");
-            System.out.println("6. Выход");
+            System.out.println("1 - Добавить новый предмет одежды");
+            System.out.println("2 - Вывести информаию о предметах одежды");
+            System.out.println("3 - Изменить информаию о предмете одежды");
+            System.out.println("4 - Найти предмет одежды");
+            System.out.println("5 - Удалить предмет одежды");
+            System.out.println("6 - Выйти из программы");
             // другие опции...
             String choice = scanner.nextLine();
             switch (choice) {
-                case "1" -> addFurniture(scanner);
-                case "2" -> showAllFurniture();
-                case "3" -> editFurniture(scanner);
-                case "4" -> searchFurniture(scanner);
-                case "5" -> deleteFurniture(scanner);
+                case "1" -> addClothes(scanner);
+                case "2" -> showAllClothes();
+                case "3" -> editClothes(scanner);
+                case "4" -> searchClothes(scanner);
+                case "5" -> deleteClothes(scanner);
                 case "6" -> {
-                    System.out.println("Выход из программы. До свидания!");
+                    System.out.println("Выход из программы");
                     return;
                 }
-                default -> System.out.println("Некорректный выбор!");
+                default -> System.out.println("Некорректная комманда!");
             }
         }
     }
 
-    private void addFurniture(Scanner scanner) {
-        System.out.println("Введите название:");
+    private Clothes getClothes(Scanner scanner){
+        System.out.println("Введите название товара:");
         String name = scanner.nextLine();
-        System.out.println("Введите материал:");
-        String material = scanner.nextLine();
-        System.out.println("Введите стиль:");
-        String style = scanner.nextLine();
+        System.out.println("Введите цвет товара:");
+        String color = scanner.nextLine();
+        System.out.println("Введите название бренда:");
+        String brand = scanner.nextLine();
+        System.out.println("Введите размер одежды:");
+        int size = Integer.parseInt(scanner.nextLine());
         System.out.println("Введите цену:");
         double price = Double.parseDouble(scanner.nextLine());
-        System.out.println("Введите количество:");
+        System.out.println("Введите количество товара:");
         int quantity = Integer.parseInt(scanner.nextLine());
-
-        Clothes furniture = new Clothes();
-        furniture.setName(name);
-        furniture.setMaterial(material);
-        furniture.setStyle(style);
-        furniture.setPrice(price);
-        furniture.setQuantity(quantity);
-
-        clothesService.addFurniture(furniture);
-        System.out.println("Мебель была успешно добавлена!");
+        return new Clothes(name, color, brand, size, price, quantity);
     }
 
-    private void showAllFurniture() {
+    private void addClothes(Scanner scanner) {
+        Clothes clothes = getClothes(scanner);
+        clothesService.addClothes(clothes);
+        System.out.println("Предмет одежды был успешно добавлен!");
+    }
+
+    private void showAllClothes() {
         List<Clothes> furnitureList = clothesService.getAllClothes();
         if (furnitureList.isEmpty()) {
             System.out.println("Мебель не найдена.");
@@ -71,67 +70,52 @@ public class Application {
         }
     }
 
-    private void editFurniture(Scanner scanner) {
-        showAllFurniture();
-        System.out.println("Введите ID мебели для редактирования:");
+    private void editClothes(Scanner scanner) {
+        showAllClothes();
+        System.out.println("Введите ID объекта для редактирования:");
         int id = Integer.parseInt(scanner.nextLine());
-        System.out.println("Введите новое название:");
-        String name = scanner.nextLine();
-        System.out.println("Введите новый материал:");
-        String material = scanner.nextLine();
-        System.out.println("Введите новый стиль:");
-        String style = scanner.nextLine();
-        System.out.println("Введите новую цену:");
-        double price = Double.parseDouble(scanner.nextLine());
-        System.out.println("Введите новое количество:");
-        int quantity = Integer.parseInt(scanner.nextLine());
-
-        Clothes updatedFurniture = new Clothes();
-        updatedFurniture.setName(name);
-        updatedFurniture.setMaterial(material);
-        updatedFurniture.setStyle(style);
-        updatedFurniture.setPrice(price);
-        updatedFurniture.setQuantity(quantity);
-
-        clothesService.updateClothes(id, updatedFurniture);
-        System.out.println("Мебель успешно обновлена!");
+        Clothes updatedClothes = getClothes(scanner);
+        clothesService.updateClothes(id, updatedClothes);
+        System.out.println("Предмет одежды успешно обновлен!");
     }
 
-    private void deleteFurniture(Scanner scanner) {
-        System.out.println("Введите ID мебели для удаления:");
+    private void deleteClothes(Scanner scanner) {
+        System.out.println("Введите ID предмета одежды для удаления:");
         int id = Integer.parseInt(scanner.nextLine());
         clothesService.deleteClothes(id);
-        System.out.println("Мебель успешно удалена!");
+        System.out.println("Предмет одежды успешно удален!");
     }
 
-    private void searchFurniture(Scanner scanner) {
+    private void searchClothes(Scanner scanner) {
         System.out.println("Выберите критерий поиска: ");
-        System.out.println("1. Название");
-        System.out.println("2. Материал");
-        System.out.println("3. Стиль");
-        System.out.println("4. Цена");
-        System.out.println("5. Количество");
+        System.out.println("1 - Название");
+        System.out.println("2 - Цвет одежды");
+        System.out.println("3 - Бренд одежды");
+        System.out.println("4 - Размер одежды");
+        System.out.println("5 - Цена");
+        System.out.println("6 - Число товара в наличии");
         String field;
         switch (scanner.nextLine()) {
-            case "1" -> field = "name";
-            case "2" -> field = "material";
-            case "3" -> field = "style";
-            case "4" -> field = "price";
-            case "5" -> field = "quantity";
+            case "1" -> field = "item_name";
+            case "2" -> field = "color";
+            case "3" -> field = "brand";
+            case "4" -> field = "item_size";
+            case "5" -> field = "price";
+            case "6" -> field = "quantity";
             default -> {
-                System.out.println("Неверный выбор, попробуйте снова.");
+                System.out.println("Неверная комманда, попробуйте снова");
                 return;
             }
         }
         System.out.println("Введите значение для поиска:");
         String value = scanner.nextLine();
 
-        List<Clothes> furnitureList = clothesService.searchClothes(field, value);
-        if (furnitureList.isEmpty()) {
-            System.out.println("Мебель не найдена.");
+        List<Clothes> clothesList = clothesService.searchClothes(field, value);
+        if (clothesList.isEmpty()) {
+            System.out.println("Одежда не найдена");
         } else {
-            for (Clothes furniture : furnitureList) {
-                System.out.println(furniture);
+            for (Clothes clothes : clothesList) {
+                System.out.println(clothes);
             }
         }
     }

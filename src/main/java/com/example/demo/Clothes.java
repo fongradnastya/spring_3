@@ -9,6 +9,22 @@ public class Clothes {
     private double price;
     private int quantity;
 
+    public Clothes(){
+        this.name = "Default name";
+        this.brand = "";
+        this.price = 0;
+        this.quantity = 1;
+    }
+
+    public Clothes(String name, String color, String brand, int size, double price, int quantity) {
+        this.name = name;
+        this.color = color;
+        this.brand = brand;
+        this.size = size;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public int getId() {
         return id;
     }
