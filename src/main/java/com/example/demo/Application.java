@@ -1,16 +1,30 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Консольное приложение для работы с бд
+ */
 @Component
 public class Application {
-    @Autowired
-    private ClothesService clothesService;
+    /**
+     * Сервис для работы с одеждой
+     */
+    private final ClothesService clothesService;
 
+    /**
+     * Конструктор приложения
+     * @param clothesService сервис для работы с одеждой
+     */
+    public Application(ClothesService clothesService) {
+        this.clothesService = clothesService;
+    }
+
+    /**
+     * Метод запуска консольного приложения
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -37,6 +51,11 @@ public class Application {
         }
     }
 
+    /**
+     * Считывает данные объекта из коммандной строки
+     * @param scanner объект класса Scanner
+     * @return новый предмет одежды
+     */
     private Clothes getClothes(Scanner scanner){
         System.out.println("Введите название товара:");
         String name = scanner.nextLine();
@@ -53,12 +72,19 @@ public class Application {
         return new Clothes(name, color, brand, size, price, quantity);
     }
 
+    /**
+     * Добавляет новый предмет одежды в базу
+     * @param scanner объект класса Scanner
+     */
     private void addClothes(Scanner scanner) {
         Clothes clothes = getClothes(scanner);
         clothesService.addClothes(clothes);
         System.out.println("Предмет одежды был успешно добавлен!");
     }
 
+    /**
+     * Выводит в консоль информацию обо всех объектах
+     */
     private void showAllClothes() {
         List<Clothes> furnitureList = clothesService.getAllClothes();
         if (furnitureList.isEmpty()) {
@@ -70,6 +96,10 @@ public class Application {
         }
     }
 
+    /**
+     * Редактирует информацию о предмете одежды
+     * @param scanner объект класса Scanner
+     */
     private void editClothes(Scanner scanner) {
         showAllClothes();
         System.out.println("Введите ID объекта для редактирования:");
@@ -79,6 +109,10 @@ public class Application {
         System.out.println("Предмет одежды успешно обновлен!");
     }
 
+    /**
+     * Удаляет предмет одежды по id
+     * @param scanner объект класса Scanner
+     */
     private void deleteClothes(Scanner scanner) {
         System.out.println("Введите ID предмета одежды для удаления:");
         int id = Integer.parseInt(scanner.nextLine());
@@ -86,6 +120,10 @@ public class Application {
         System.out.println("Предмет одежды успешно удален!");
     }
 
+    /**
+     * Ищет предмет одежды по одному из полей
+     * @param scanner объект класса Scanner
+     */
     private void searchClothes(Scanner scanner) {
         System.out.println("Выберите критерий поиска: ");
         System.out.println("1 - Название");
